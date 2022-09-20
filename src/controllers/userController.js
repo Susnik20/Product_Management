@@ -143,15 +143,6 @@ const createUser = async function (req, res) {
         if (!pincodeRegex.test(billing.pincode)) return res.status(400).send({ status: false, message: "Pincode is not valid, it should be number and of 6 digits only" })
         if (!nameRegex.test(billing.city)) return res.status(400).send({ status: false, message: "City is not valid" })
 
-
-        // if (files.length == 0) {
-        //     return res.status(400).send({ status: false, message: "Plesae upload the profile image." });
-        // } else if (files.length > 1) {
-        //     return res.status(400).send({ status: false, message: "Plesae upload the profile image." });
-        // }
-
-        //let profileImage = uploadedFileURL;
-
         let encryptedPassword = await bcrypt.hash(password, saltRounds)
 
         let validUserData = { fname: fname, lname, email, profileImage: profileImage, phone, address, password: encryptedPassword }

@@ -208,7 +208,7 @@ const updateProductDetails = async function (req, res) {
         const files = req.files
         const updateData = req.body
 
-        let { title, description, price, style, availableSizes, installments, isFreeShipping } = updateData
+        let { title, description, price, style, availableSizes, installments, isFreeShipping, ...rest } = updateData
 
 
         if (files && files.length > 0) {
@@ -221,6 +221,8 @@ const updateProductDetails = async function (req, res) {
             var uploadedFileURL = await uploadFile(files[0])
             updateData.productImage = uploadedFileURL
         }
+        
+        if(Object.keys(rest).length>0) return res.status(400).send({status:false,message:'please put valid keys'})
 
         if (!ObjectId.isValid(productId)) return res.status(400).send({ status: false, msg: "invalid product Id" })
 
